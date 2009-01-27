@@ -1,40 +1,102 @@
 phylosor=function(samp,tree)
 {
 	s=nrow(samp)
-	sample_names=rownames(samp)
-	pairs=s*(s-1)/2
+	phylodist=matrix(NA,s,s)
+	rownames(phylodist)=rownames(samp)
+	colnames(phylodist)=rownames(samp)
 	
-	plot1.list=c()
-	plot2.list=c()
-	sor.list=c()
-	phylosor.list=c()
-
-	
-	count=0
 	for (l in 1:(s-1))
 	{
-		spl=sum(samp[l,])
 		pdl=.pdshort(samp[l,],tree)
 		for (k in (l+1):s)
 		{
-			count=count+1
-			spk=sum(samp[k,])
 			pdk=.pdshort(samp[k,],tree)
-			sharedlk=sum(samp[l,]*samp[k,])
-			pdsharedlk=.pdshort(samp[l,],tree)+.pdshort(samp[k,],tree)-.pdshort((samp[l,]+samp[k,]),tree)
-			avglk=0.5*(spl+spk)
-			pdavglk=0.5*(pdl+pdk)
-			sorlk=sharedlk/avglk
-			phylosorlk=pdsharedlk/pdavglk
-			plot1.list=c(plot1.list,sample_names[l])
-			plot2.list=c(plot2.list,sample_names[k])
-			sor.list=c(sor.list,sorlk)
-			phylosor.list=c(phylosor.list,phylosorlk)
+			pdtot=.pdshort((samp[l,]+samp[k,]),tree)
+			pdsharedlk=pdl+pdk-pdtot
+			phylodist[k,l]=2*pdsharedlk/(pdl+pdk)
 			}
 			}
-			data.frame(plot1=plot1.list,plot2=plot2.list,sor=sor.list,phylosor=phylosor.list)}
+			return(as.dist(phylodist))
+}			
+phylosor.rnd=function(samp,tree,cstSor=TRUE,null.model=c("taxa.labels","frequency","richness","independentswap","trialswap"),runs=999,iterations=1000)
 
-		
+{
+	
+	Res=list()
+			
+	if (cstSor==TRUE)
+	{
+		if (null.model=="taxa.labels")
+		{
+			for (r in 1:runs)
+			{
+				Res<-c(Res,list(.phylosor.taxaShuffle(samp,tree)))}
+			}
+			
+			else if (null.model=="richness")
+			{
+				for (r in 1:runs)
+				{Res<-c(Res,list(.phylosor.richness(samp,tree)))}
+				}
+				
+				else stop("This null model does not maintain Sorensen similarity: use cstSor=FALSE, or choose an other null model")
+				}
+	
+	else
+	{
+		if (null.model=="taxa.labels") 
+		{
+			warning("This null model maintains Sorensen similarity")
+			for (r in 1:runs)
+			{
+				Res<-c(Res,list(.phylosor.taxaShuffle(samp,tree)))
+			}
+			}
+			
+			else
+			for (r in 1:runs)
+			{
+				Res<-c(Res,list(phylosor(randomizeSample(samp, null.model),tree)))
+			}
+			}
+
+return(Res)
+}
+	
+
+##########################################################################################
+.phylosor.taxaShuffle=function(samp,tree)
+	{
+		sampr=samp
+		colnames(sampr)=sample(colnames(samp))
+		return(phylosor(sampr,tree))
+		}
+
+##########################################################################################
+.phylosor.richness=function(samp,tree)
+{
+	s=nrow(samp)
+	phylodist=matrix(NA,s,s)
+	rownames(phylodist)=rownames(samp)
+	colnames(phylodist)=rownames(samp)
+	
+	for (l in 1:(s-1))
+	{
+		for (k in (l+1):s)
+		{
+			sampr=samp
+			colnames(sampr)=sample(colnames(samp))
+			pdl=.pdshort(sampr[l,],tree)
+			pdk=.pdshort(sampr[k,],tree)
+			pdtot=.pdshort((sampr[l,]+sampr[k,]),tree)
+			pdsharedlk=pdl+pdk-pdtot
+			phylodist[k,l]=2*pdsharedlk/(pdl+pdk)
+			}
+			}
+			return(as.dist(phylodist))
+}			
+
+#############################################################################################		
 	
 .pdshort=function(comm,tree)
 {
@@ -49,4 +111,4 @@ phylosor=function(samp,tree)
             PD <- sum(sub.tree$edge.length)}
             return(PD)}
 
-	
+
