@@ -449,40 +449,76 @@ psd<-function(samp,tree,compute.var=TRUE){
   }
 }
 
-pd<-function(samp,tree){
-  
-    #If phylo has no given branch lengths
-  if(is.null(tree$edge.length)){tree<-compute.brlen(tree, 1)}
-  # Make sure that the species line up
-  tree<-prune.sample(samp,tree)
-  samp<-samp[,tree$tip.label]
-  species<-colnames(samp)
-  
-  # numbers of locations and species
-  SR<-rowSums(samp)
-  nlocations=dim(samp)[1]
-  nspecies=dim(samp)[2]
+pd<-function(samp, tree, include.root=TRUE) {
 
-  ##################################
-  # calculate observed PDs
-  #
-  PDs=NULL
-
-  for(i in 1:nlocations)
-  {  
-    index<-species[samp[i,]==0]	#species not in sample
-    if(length(index)>=(nspecies-1))
-    {
-      PD<-NA
-    } else {
-      sub.tree<-drop.tip(tree,index)
-      PD<-sum(sub.tree$edge.length)
+    #If phylo has no branch lengths
+    if(is.null(tree$edge.length)) {
+        stop("Tree has no branch lengths, cannot compute pd")
     }
-      PDs<-c(PDs,PD)
-  }
-  
-  PDout<-data.frame(cbind(PDs,SR))
-  rownames(PDout)<-rownames(samp) 
-  return(PDout)
-}
+    
+    # numbers of locations and species
+    species<-colnames(samp)
+    SR<-rowSums(samp)
+    nlocations=dim(samp)[1]
+    nspecies=dim(samp)[2]
+    
+    ##################################
+    # calculate observed PDs
+    #
+    PDs=NULL
+    
+    for(i in 1:nlocations)
+    {  
+        
+        present<-species[samp[i,]>0]    #species in sample
+        treeabsent <- tree$tip.label[which(!(tree$tip.label %in% present))]    
+        
+        if(length(present)==0)
+        {
+            #no species present
+            PD<-0
+        }
+        else if(length(present)==1)
+        {
+        
+            #one species present - PD = length from root to that tip
+            if (!is.rooted(tree) || !include.root) {
+                warning("Rooted tree and include.root=TRUE argument required to calculate PD of single-species sampunities. Single species sampunity assigned PD value of NA.")
+                PD <- NA
+            }
+            else {
+                #one species present - PD = length from root to that tip        
+                PD <- node.age(tree)$ages[ which(tree$edge[,2] == 
+                                        which(tree$tip.label==present))]
+            }
+        }
+        else if(length(treeabsent)==0)
+        {
+            #all species in tree present in sampunity
+            PD <- sum(tree$edge.length)
+        }
+        else
+        {
+            #subset of tree species present in sampunity
+            sub.tree<-drop.tip(tree,treeabsent) 
+            if (include.root) {
+                if (!is.rooted(tree) || !is.ultrametric(tree)) {
+                    stop("Rooted ultrametric tree required to calculate PD with include.root=TRUE argument")
+                }
+                sub.tree.depth <- max(node.age(sub.tree)$ages)
+                orig.tree.depth <- max(node.age(tree)$ages)
+                PD<-sum(sub.tree$edge.length) + (orig.tree.depth-sub.tree.depth)        
+            }
+            else {
+                PD<-sum(sub.tree$edge.length)
+            }          
+        }
+        
+        PDs<-c(PDs,PD)
+    }
+    
+    PDout<-data.frame(PD=PDs,SR=SR)
+    rownames(PDout)<-rownames(samp) 
+    return(PDout)
 
+}

@@ -1,5 +1,15 @@
-phylosor=function(samp,tree)
+phylosor <- function(samp,tree)
 {
+  
+    #If phylo has no given branch lengths
+    if(is.null(tree$edge.length)) {
+    stop("Tree has no branch lengths, cannot compute pd")
+    }
+    
+    # Make sure that the species line up
+    tree<-prune.sample(samp,tree)
+    samp<-samp[,tree$tip.label]
+
 	s=nrow(samp)
 	phylodist=matrix(NA,s,s)
 	rownames(phylodist)=rownames(samp)
@@ -14,11 +24,12 @@ phylosor=function(samp,tree)
 			pdtot=.pdshort((samp[l,]+samp[k,]),tree)
 			pdsharedlk=pdl+pdk-pdtot
 			phylodist[k,l]=2*pdsharedlk/(pdl+pdk)
-			}
-			}
+        }
+    }
 			return(as.dist(phylodist))
-}			
-phylosor.rnd=function(samp,tree,cstSor=TRUE,null.model=c("taxa.labels","frequency","richness","independentswap","trialswap"),runs=999,iterations=1000)
+}
+
+phylosor.rnd <- function(samp, tree, cstSor=TRUE, null.model=c("taxa.labels", "frequency", "richness", "independentswap", "trialswap"), runs=999, iterations=1000)
 
 {
 	
@@ -98,17 +109,42 @@ return(Res)
 
 #############################################################################################		
 	
-.pdshort=function(comm,tree)
+.pdshort=function(comm,tree,keep.root=TRUE)
 {
 
-	nbspecies=length(comm)
-	species = names(comm)
-	index = species[comm == 0]
-        if (length(index) >= (nbspecies - 1)) 
-        {PD <- NA}
-        else {
-            sub.tree <- drop.tip(tree, index)
-            PD <- sum(sub.tree$edge.length)}
-            return(PD)}
+    if (!is.rooted(tree) || !is.ultrametric(tree)) {
+        stop("Rooted ultrametric tree required for phylosor calculation")
+    }
 
+	nbspecies <- length(comm)
+	species <- names(comm)
 
+    present <- species[comm>0]  #species in sample
+    treeabsent <- tree$tip.label[which(!(tree$tip.label %in% present))]
+    
+    if(length(present)==0)
+    {
+        #no species present
+        PD<-0
+    }
+    else if(length(present)==1)
+    {
+        #one species present - PD = length from root to that tip        
+        PD <- node.age(tree)$ages[ which(tree$edge[,2] == 
+                                    which(tree$tip.label==present))]
+    }
+    else if(length(treeabsent)==0)
+    {
+        #all species in tree present in community
+        PD <- sum(tree$edge.length)
+    }
+    else
+    {
+        #subset of tree species present in community
+        sub.tree<-drop.tip(tree,treeabsent) 
+        sub.tree.depth <- max(node.age(sub.tree)$ages)
+        orig.tree.depth <- max(node.age(tree)$ages)
+        PD<-sum(sub.tree$edge.length) + (orig.tree.depth-sub.tree.depth)
+    }
+    return(PD)
+}
