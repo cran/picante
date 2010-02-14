@@ -1,7 +1,7 @@
 \name{ses.mpd}
 \alias{ses.mpd}
 
-\title{ Standardized effect size of mpd }
+\title{ Standardized effect size of MPD }
 \description{
   Standardized effect size of mean pairwise distances in communities. When used with a phylogenetic distance matrix, equivalent to -1 times the Nearest Relative Index (NRI).
 }
@@ -46,7 +46,7 @@ Currently implemented null models (arguments to null.model):
 
 \references{ Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software for the analysis of phylogenetic community structure and trait evolution. Version 4.0.1. \url{http://www.phylodiversity.net/phylocom/}. }
 \author{ Steven Kembel <skembel@uoregon.edu> }
-\seealso{ \code{\link{mpd}}, \code{\link{randomizeSample}}  }
+\seealso{ \code{\link{mpd}}, \code{\link{randomizeMatrix}}  }
 \examples{
 data(phylocom)
 ses.mpd(phylocom$sample, cophenetic(phylocom$phylo),null.model="taxa.labels")}
