@@ -1,10 +1,11 @@
-94a4daefd5931aa26af8103fe9ac9e61 *DESCRIPTION
+95026538708f42c95a450d29f9b65d9d *DESCRIPTION
 ade7322785caf9b586f3f8f4bbc6b2ee *NAMESPACE
 87718eefb56b233053684b8616fde9eb *R/color.plot.phylo.R
 f2aaf9df1eb8d614d8b778dd4f7b2f9b *R/cor.table.R
 8ae1260c601a765dee2e464a9f4c7de8 *R/data.checking.R
 c6c30943d0dc1aef79f0cd3c96937e6a *R/evol.distinct.R
 4681bfc383b1431e1405bf51db64d4e3 *R/evolve.trait.R
+61aca29be0d683f5b7260299121cf4a3 *R/expected.pd.R
 3bbd8d49db9094b1d6627e16db3925aa *R/get.nodes.R
 cd4dc8c660f3bf09476bec132d743ed9 *R/node.desc.R
 44b3fa3391458328e70b9c3c23be7297 *R/node.number.R
@@ -32,7 +33,7 @@ abbe68897ad3ce9f944fe64c24e5eebd *R/utility.R
 372eff4a6a020fd2b2c48f94375f008d *data/phylocom.rda
 971b22633db8154c7da3a1b80fa511a1 *inst/CITATION
 cc5b2b431d8195006596521c9470c1c9 *inst/doc/picante-intro.Rnw
-3628328a1d4d581723c025f3e95693e4 *inst/doc/picante-intro.pdf
+d8fabbb2833482c6113c4a78700f6a53 *inst/doc/picante-intro.pdf
 a1fdd4ef8dd93045d948484d75914e77 *man/IvesGodfray.Rd
 192efd04a983072de50e62e19b43ed7d *man/Kcalc.Rd
 97cf0eb584679884535bee0178f2ccb2 *man/color.plot.phylo.Rd
@@ -43,6 +44,7 @@ d5ec6bebc9c6297150286afc66952ba9 *man/comdistnt.Rd
 171e25838eb8330cb808e6ca8ca3161c *man/cor.table.Rd
 84ab0ee18a40654519a23d7450b69f2c *man/data.checking.Rd
 67796f40f0f4dc2fccd866555263fb60 *man/evol.distinct.Rd
+7e671855af1554a9410b1954920adfc2 *man/expected.pd.Rd
 20e991f966a6ff10dbbb323f7438b8e3 *man/matrix2sample.Rd
 365ef1397437446b8fe8aad0793a89bd *man/mntd.Rd
 de335a6a431422fe30aecee6a28ef825 *man/mpd.Rd
@@ -57,7 +59,7 @@ ee5685f5da4821109074b7b873ae856d *man/phylosignal.Rd
 9f8b7fd65ce1ad6854b52ef4bc9a1703 *man/phylosor.rnd.Rd
 6a870b506ba22cd747bb145ac5e191a3 *man/phylostruct.Rd
 8bb4a1af185aa0d2c4a4e383bb3bd775 *man/pic3.Rd
-0d779f1b44a49d18f0fa1475b5d3f896 *man/picante-package.Rd
+080b76ef58dadfdf5726cdbbcaddbf8a *man/picante-package.Rd
 39cfb05cf1c09cb2d6eba7a5b2bd1823 *man/pruning.Rd
 d136d5393a64b1231da92d018bdc46a3 *man/psd.Rd
 a2f54e796b5e9e96398a99ab6eadb704 *man/randomizeSample.Rd
