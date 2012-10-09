@@ -1,8 +1,8 @@
 Package: picante
 Type: Package
 Title: R tools for integrating phylogenies and ecology
-Version: 1.5-1
-Date: 2012-10-1
+Version: 1.5-2
+Date: 2012-10-9
 Author: Steven W. Kembel <skembel@uoregon.edu>, David D. Ackerly
         <dackerly@berkeley.edu>, Simon P. Blomberg
         <s.blomberg1@uq.edu.au>, Will K. Cornwell
@@ -16,6 +16,6 @@ Suggests: brglm, circular, corpcor, quantreg, plotrix
 Description: Phylocom integration, community analyses, null-models,
         traits and evolution in R
 License: GPL-2
-Packaged: 2012-10-02 00:29:35 UTC; steve
+Packaged: 2012-10-09 13:09:08 UTC; steve
 Repository: CRAN
-Date/Publication: 2012-10-02 06:16:31
+Date/Publication: 2012-10-09 14:50:42

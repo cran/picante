@@ -1,4 +1,4 @@
-95026538708f42c95a450d29f9b65d9d *DESCRIPTION
+d8d724cdf2d66f09e5e66e50b6dac762 *DESCRIPTION
 ade7322785caf9b586f3f8f4bbc6b2ee *NAMESPACE
 87718eefb56b233053684b8616fde9eb *R/color.plot.phylo.R
 f2aaf9df1eb8d614d8b778dd4f7b2f9b *R/cor.table.R
@@ -19,7 +19,6 @@ ccd0f2b2c03193e4a6b02e4ece34ae00 *R/phylocom.R
 876b314dbff450e325c5fdba7973c92a *R/phylosignal.R
 36b1dbcfe3573724e6677872ce7f3ae3 *R/phylosor.R
 29ec226ca70a0f4a935ff6edc2d9a3e7 *R/phylostruct.R
-a5e206170a34eecdc52826576c740e6d *R/pic3.R
 55466f9341d12102e2c356f572f7fe0a *R/pruning.R
 9223b228253f408bb0b10eb741884b65 *R/randomizeSample.R
 9dc587fbb8c7da77d38abdc5cf22bf78 *R/raoD.R
@@ -27,13 +26,13 @@ a5e206170a34eecdc52826576c740e6d *R/pic3.R
 e1f9f7cfc90022545b22f0ab26a1aefc *R/species.dist.R
 8fc56af9ead20b43161c83549f8d84c8 *R/sppregs.R
 b61070f9bf5276b4fe41ac05b8beb03c *R/tax.distinctiveness.R
-afd3ca37045e81d55e624d52cec6145c *R/traitgram.R
+36c9ae0def63e474da4f55dc7829672d *R/traitgram.R
 abbe68897ad3ce9f944fe64c24e5eebd *R/utility.R
 0a65bd6c438694108b48c7b36be8a18c *data/IvesGodfray.rda
 372eff4a6a020fd2b2c48f94375f008d *data/phylocom.rda
 971b22633db8154c7da3a1b80fa511a1 *inst/CITATION
 cc5b2b431d8195006596521c9470c1c9 *inst/doc/picante-intro.Rnw
-d8fabbb2833482c6113c4a78700f6a53 *inst/doc/picante-intro.pdf
+d9ad5cf34bd60020cf88c448d2aca206 *inst/doc/picante-intro.pdf
 a1fdd4ef8dd93045d948484d75914e77 *man/IvesGodfray.Rd
 192efd04a983072de50e62e19b43ed7d *man/Kcalc.Rd
 97cf0eb584679884535bee0178f2ccb2 *man/color.plot.phylo.Rd
@@ -58,8 +57,7 @@ ee5685f5da4821109074b7b873ae856d *man/phylosignal.Rd
 91e9aadc22ed3b729b379e60ca8bf7ea *man/phylosor.Rd
 9f8b7fd65ce1ad6854b52ef4bc9a1703 *man/phylosor.rnd.Rd
 6a870b506ba22cd747bb145ac5e191a3 *man/phylostruct.Rd
-8bb4a1af185aa0d2c4a4e383bb3bd775 *man/pic3.Rd
-080b76ef58dadfdf5726cdbbcaddbf8a *man/picante-package.Rd
+07298c37726746a70544f9c9ebca68cc *man/picante-package.Rd
 39cfb05cf1c09cb2d6eba7a5b2bd1823 *man/pruning.Rd
 d136d5393a64b1231da92d018bdc46a3 *man/psd.Rd
 a2f54e796b5e9e96398a99ab6eadb704 *man/randomizeSample.Rd
@@ -73,7 +71,7 @@ a7c7635bb20883cd7550cb5dd4e28f91 *man/ses.mntd.Rd
 03e31c36ba149234a8027f82562350f8 *man/species.dist.Rd
 f764cb436fe7fdc9c720f513a653caea *man/sppregs.Rd
 de40a15267e10d8f3357965a4b62ab07 *man/tax.distinctiveness.Rd
-5be755380126d1d26274ca5bfaa25c5a *man/traitgram.Rd
+24cc08ac45c5f5c5d69dab6b046e6b35 *man/traitgram.Rd
 c0fae7a076df9a1b2faa9b3effa98c25 *man/unifrac.Rd
 8505ceb04a2629e8f34396eefe596b6d *man/utility.Rd
 267e26ee69363080dc99877207210e4b *man/writesample.Rd
