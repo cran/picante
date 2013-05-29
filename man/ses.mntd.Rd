@@ -7,7 +7,8 @@
   Standardized effect size of mean nearest taxon distances in communities. When used with a phylogenetic distance matrix, equivalent to -1 times the Nearest Taxon Index (NTI).
 }
 \usage{
-ses.mntd(samp, dis, null.model = c("taxa.labels", "richness", "frequency", "sample.pool", "phylogeny.pool", "independentswap", "trialswap"),
+ses.mntd(samp, dis, null.model = c("taxa.labels", "richness", "frequency",
+    "sample.pool", "phylogeny.pool", "independentswap", "trialswap"),
     abundance.weighted=FALSE, runs = 999, iterations = 1000)
 }
 
@@ -46,7 +47,7 @@ Currently implemented null models (arguments to null.model):
 }
 }
 \references{ Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software for the analysis of phylogenetic community structure and trait evolution. Version 4.0.1. \url{http://www.phylodiversity.net/phylocom/}. }
-\author{ Steven Kembel <skembel@uoregon.edu> }
+\author{ Steven Kembel <steve.kembel@gmail.com> }
 \seealso{ \code{\link{mntd}}, \code{\link{randomizeMatrix}}  }
 \examples{
 data(phylocom)
