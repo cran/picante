@@ -42,7 +42,7 @@ function(samp,phylo,metric=c("cij","checkerboard","jaccard","doij"),
 					quant=0.75, runs=999, show.plot=FALSE, ...)
 {
 
-    if (!require(quantreg)) {
+    if (!requireNamespace("quantreg")) {
         stop("The 'quantreg' package is required to use this function.")
     }
 
@@ -55,38 +55,38 @@ function(samp,phylo,metric=c("cij","checkerboard","jaccard","doij"),
 	taxa.names <- rownames(as.matrix(phylo.dist))
 	samp.dist <- as.dist(as.matrix(species.dist(samp,metric))[taxa.names,taxa.names])
     results$quantile <- quant
-    qrres <- coef(rq(samp.dist~phylo.dist,tau=quant, na.action=na.omit))
+    qrres <- coef(quantreg::rq(samp.dist~phylo.dist,tau=quant, na.action=na.omit))
     names(qrres) <- NULL
-    results$obs.qr.intercept <- qrres[1] 
+    results$obs.qr.intercept <- qrres[1]
 	results$obs.qr.slope <- qrres[2]
-	
+
 	if (show.plot) {
-        plot(samp.dist~phylo.dist,xlab="Phylogenetic distance",ylab="Co-occurrence")   
+        plot(samp.dist~phylo.dist,xlab="Phylogenetic distance",ylab="Co-occurrence")
     }
-	
+
 	if (null.model=="sample.taxa.labels") for (run in 1:runs)
 	{
 		phylo.dist <- as.dist(taxaShuffle(as.matrix(phylo.dist))[taxa.names,taxa.names])
-		results$random.qr.slopes[run] <- coef(rq(samp.dist~phylo.dist,tau=quant,
+		results$random.qr.slopes[run] <- coef(quantreg::rq(samp.dist~phylo.dist,tau=quant,
 		    na.action=na.omit))[2]
 	}
 	else if (null.model=="pool.taxa.labels") for (run in 1:runs)
 	{
 		phylo.dist <- as.dist(taxaShuffle(as.matrix(pool.phylo.dist))[taxa.names,taxa.names])
-		results$random.qr.slopes[run] <- coef(rq(samp.dist~phylo.dist,tau=quant,
+		results$random.qr.slopes[run] <- coef(quantreg::rq(samp.dist~phylo.dist,tau=quant,
 		    na.action=na.omit))[2]
 	}
 	else for (run in 1:runs)
 	{
 		samp.dist <- species.dist(randomizeMatrix(samp,null.model,...),metric)
-		results$random.qr.slopes[run] <- coef(rq(samp.dist~phylo.dist,tau=quant,
+		results$random.qr.slopes[run] <- coef(quantreg::rq(samp.dist~phylo.dist,tau=quant,
 		    na.action=na.omit))[2]
 	}
 	results$obs.rank <- rank(as.vector(c(results$obs.qr.slope,results$random.qr.slopes)))[1]
 	results$obs.qr.slope.p <- results$obs.rank/(runs+1)
 
 	if (show.plot) {
-        abline(results$obs.qr.intercept,results$obs.qr.slope)   
+        abline(results$obs.qr.intercept,results$obs.qr.slope)
         legend("topleft",paste("q",as.character(quant),sep=""))
     }
 
@@ -104,14 +104,14 @@ function(x) {
 	return(x)
 }
 
-`tipShuffle` <- 
+`tipShuffle` <-
 function(phy) {
     phy$tip.label <- phy$tip.label[sample(length(phy$tip.label))]
     return(phy)
 }
 
 
-mpd <- function(samp, dis, abundance.weighted=FALSE) 
+mpd <- function(samp, dis, abundance.weighted=FALSE)
 {
     N <- dim(samp)[1]
     mpd <- numeric(N)
@@ -121,11 +121,11 @@ mpd <- function(samp, dis, abundance.weighted=FALSE)
             sample.dis <- dis[sppInSample, sppInSample]
             if (abundance.weighted) {
                 sample.weights <- t(as.matrix(samp[i,sppInSample,drop=FALSE])) %*% as.matrix(samp[i,sppInSample,drop=FALSE])
-                mpd[i] <- weighted.mean(sample.dis,sample.weights)  
+                mpd[i] <- weighted.mean(sample.dis,sample.weights)
 
             }
             else {
-                mpd[i] <- mean(sample.dis[lower.tri(sample.dis)])         
+                mpd[i] <- mean(sample.dis[lower.tri(sample.dis)])
             }
         }
         else{
@@ -165,9 +165,9 @@ mntd <- function(samp, dis, abundance.weighted=FALSE)
 
 
 `ses.mpd` <-
-function (samp, dis, null.model = c("taxa.labels", "richness", "frequency", "sample.pool", 
+function (samp, dis, null.model = c("taxa.labels", "richness", "frequency", "sample.pool",
     "phylogeny.pool", "independentswap", "trialswap"),
-    abundance.weighted = FALSE, runs = 999, iterations = 1000) 
+    abundance.weighted = FALSE, runs = 999, iterations = 1000)
 {
     dis <- as.matrix(dis)
     mpd.obs <- mpd(samp, dis, abundance.weighted = abundance.weighted)
@@ -175,7 +175,7 @@ function (samp, dis, null.model = c("taxa.labels", "richness", "frequency", "sam
     mpd.rand <- switch(null.model,
     	taxa.labels = t(replicate(runs, mpd(samp, taxaShuffle(dis), abundance.weighted=abundance.weighted))),
     	richness = t(replicate(runs, mpd(randomizeMatrix(samp,null.model="richness"), dis, abundance.weighted))),
-    	frequency = t(replicate(runs, mpd(randomizeMatrix(samp,null.model="frequency"), dis, abundance.weighted))),    	
+    	frequency = t(replicate(runs, mpd(randomizeMatrix(samp,null.model="frequency"), dis, abundance.weighted))),
     	sample.pool = t(replicate(runs, mpd(randomizeMatrix(samp,null.model="richness"), dis, abundance.weighted))),
     	phylogeny.pool = t(replicate(runs, mpd(randomizeMatrix(samp,null.model="richness"),
     		taxaShuffle(dis), abundance.weighted))),
@@ -185,18 +185,18 @@ function (samp, dis, null.model = c("taxa.labels", "richness", "frequency", "sam
     mpd.rand.mean <- apply(X = mpd.rand, MARGIN = 2, FUN = mean, na.rm=TRUE)
     mpd.rand.sd <- apply(X = mpd.rand, MARGIN = 2, FUN = sd, na.rm=TRUE)
     mpd.obs.z <- (mpd.obs - mpd.rand.mean)/mpd.rand.sd
-    mpd.obs.rank <- apply(X = rbind(mpd.obs, mpd.rand), MARGIN = 2, 
+    mpd.obs.rank <- apply(X = rbind(mpd.obs, mpd.rand), MARGIN = 2,
         FUN = rank)[1, ]
-    mpd.obs.rank <- ifelse(is.na(mpd.rand.mean),NA,mpd.obs.rank)    
-    data.frame(ntaxa=specnumber(samp),mpd.obs, mpd.rand.mean, mpd.rand.sd, mpd.obs.rank, 
+    mpd.obs.rank <- ifelse(is.na(mpd.rand.mean),NA,mpd.obs.rank)
+    data.frame(ntaxa=specnumber(samp),mpd.obs, mpd.rand.mean, mpd.rand.sd, mpd.obs.rank,
         mpd.obs.z, mpd.obs.p=mpd.obs.rank/(runs+1),runs=runs, row.names = row.names(samp))
 }
 
 
 `ses.mntd` <-
-function (samp, dis, null.model = c("taxa.labels", "richness", "frequency", "sample.pool", 
+function (samp, dis, null.model = c("taxa.labels", "richness", "frequency", "sample.pool",
     "phylogeny.pool", "independentswap", "trialswap"),
-    abundance.weighted = FALSE, runs = 999, iterations = 1000) 
+    abundance.weighted = FALSE, runs = 999, iterations = 1000)
 {
     dis <- as.matrix(dis)
     mntd.obs <- mntd(samp, dis, abundance.weighted)
@@ -214,18 +214,18 @@ function (samp, dis, null.model = c("taxa.labels", "richness", "frequency", "sam
     mntd.rand.mean <- apply(X = mntd.rand, MARGIN = 2, FUN = mean, na.rm=TRUE)
     mntd.rand.sd <- apply(X = mntd.rand, MARGIN = 2, FUN = sd, na.rm=TRUE)
     mntd.obs.z <- (mntd.obs - mntd.rand.mean)/mntd.rand.sd
-    mntd.obs.rank <- apply(X = rbind(mntd.obs, mntd.rand), MARGIN = 2, 
+    mntd.obs.rank <- apply(X = rbind(mntd.obs, mntd.rand), MARGIN = 2,
         FUN = rank)[1, ]
-    mntd.obs.rank <- ifelse(is.na(mntd.rand.mean),NA,mntd.obs.rank)     
-    data.frame(ntaxa=specnumber(samp),mntd.obs, mntd.rand.mean, mntd.rand.sd, mntd.obs.rank, 
+    mntd.obs.rank <- ifelse(is.na(mntd.rand.mean),NA,mntd.obs.rank)
+    data.frame(ntaxa=specnumber(samp),mntd.obs, mntd.rand.mean, mntd.rand.sd, mntd.obs.rank,
         mntd.obs.z, mntd.obs.p=mntd.obs.rank/(runs+1),runs=runs, row.names = row.names(samp))
 }
 
 
-psv<-function(samp,tree,compute.var=TRUE){
+psv<-function(samp,tree,compute.var=TRUE,scale.vcv=TRUE){
   # Make samp matrix a pa matrix
   samp[samp>0]<-1
-  
+
   flag=0
   if (is.null(dim(samp))) #if the samp matrix only has one site
   {
@@ -240,7 +240,7 @@ psv<-function(samp,tree,compute.var=TRUE){
     # Make sure that the species line up
     samp<-samp[,tree$tip.label]
     # Make a correlation matrix of the species pool phylogeny
-    Cmatrix<-vcv.phylo(tree,corr=TRUE)
+    Cmatrix<-vcv.phylo(tree,corr=scale.vcv)
   } else {
     Cmatrix<-tree
     species<-colnames(samp)
@@ -249,17 +249,17 @@ psv<-function(samp,tree,compute.var=TRUE){
     Cmatrix<-Cmatrix[species,species]
     samp<-samp[,colnames(Cmatrix)]
   }
-  
+
     # numbers of locations and species
     SR<-rowSums(samp)
     nlocations<-dim(samp)[1]
     nspecies<-dim(samp)[2]
-  
+
     ##################################
     # calculate observed PSVs
     #
     PSVs<-NULL
-  
+
     for(i in 1:nlocations)
     {
       index<-seq(1:nrow(Cmatrix))[samp[i,]==1]	#species present
@@ -274,23 +274,23 @@ psv<-function(samp,tree,compute.var=TRUE){
         PSVs<-c(PSVs,PSV)
     }
     PSVout<-cbind(PSVs,SR)
-  
+
   if(flag==2)
   {
     PSVout<-PSVout[-2,]
     return(PSVout)
   } else {
-    if(compute.var==FALSE) 
+    if(compute.var==FALSE)
     {
       return(data.frame(PSVout))
     } else {
-    
+
       PSVvar<-NULL
       X<-Cmatrix-(sum(sum(Cmatrix-diag(nspecies))))/(nspecies*(nspecies-1));
       X<-X-diag(diag(X))
-  
+
       SS1<-sum(X*X)/2
-  
+
       SS2<-0;
       for(i in 1:(nspecies-1)){
         for(j in (i+1):nspecies){
@@ -298,24 +298,24 @@ psv<-function(samp,tree,compute.var=TRUE){
         }
       }
       SS3<--SS1-SS2
-  
+
       S1<-SS1*2/(nspecies*(nspecies-1))
       S2<-SS2*2/(nspecies*(nspecies-1)*(nspecies-2))
-  
+
       if(nspecies==3){
         S3<-0
       }else{
       S3<-SS3*2/(nspecies*(nspecies-1)*(nspecies-2)*(nspecies-3))
       }
-  
+
       for(n in 2:nspecies){
         approxi<-2/(n*(n-1))*(S1 + (n-2)*S2 + (n-2)*(n-3)*S3)
         PSVvar<-rbind(PSVvar, c(n, approxi))
       }
-  
+
       vars<-rep(0,nlocations)
       PSVout<-cbind(PSVout,vars)
-  
+
       for (g in 1:nlocations)
       {
         if(PSVout[g,2]>1)
@@ -330,9 +330,9 @@ psv<-function(samp,tree,compute.var=TRUE){
   }
 }
 
-psr <- function(samp,tree,compute.var=TRUE){
-  PSVout<-psv(samp,tree,compute.var)
-  if(is.null(dim(PSVout))==TRUE) 
+psr <- function(samp,tree,compute.var=TRUE,scale.vcv=TRUE){
+  PSVout<-psv(samp,tree,compute.var,scale.vcv=scale.vcv)
+  if(is.null(dim(PSVout))==TRUE)
   {
     PSRout<-data.frame(cbind(PSVout[1]*PSVout[2],PSVout[2]))
     names(PSRout)<-c("PSR","SR")
@@ -345,7 +345,7 @@ psr <- function(samp,tree,compute.var=TRUE){
       rownames(PSRout)<-rownames(PSVout)
       return(data.frame(PSRout))
     } else {
-      PSRout<-cbind(PSRout,PSVout[,3]*(PSVout[,2])^2)       
+      PSRout<-cbind(PSRout,PSVout[,3]*(PSVout[,2])^2)
       colnames(PSRout)<-c("PSR","SR","vars")
       rownames(PSRout)<-rownames(PSVout)
       return(data.frame(PSRout))
@@ -353,7 +353,7 @@ psr <- function(samp,tree,compute.var=TRUE){
   }
 }
 
-pse<-function(samp,tree){
+pse<-function(samp,tree,scale.vcv=TRUE){
   flag=0
   if (is.null(dim(samp))) #if the samp matrix only has one site
   {
@@ -362,15 +362,15 @@ pse<-function(samp,tree){
   }
 
   samp<-as.matrix(samp)
-  
+
   if(is(tree)[1]=="phylo")
   {
     if(is.null(tree$edge.length)){tree<-compute.brlen(tree, 1)}  #If phylo has no given branch lengths
-    tree<-prune.sample(samp,tree) 
+    tree<-prune.sample(samp,tree)
     # Make sure that the species line up
     samp<-samp[,tree$tip.label, drop=FALSE]
     # Make a correlation matrix of the species pool phylogeny
-    Cmatrix<-vcv.phylo(tree,corr=TRUE)
+    Cmatrix<-vcv.phylo(tree,corr=scale.vcv)
   } else {
     Cmatrix<-tree
     species<-colnames(samp)
@@ -379,7 +379,7 @@ pse<-function(samp,tree){
     Cmatrix<-Cmatrix[species,species]
     samp<-samp[,colnames(Cmatrix),drop=FALSE]
   }
-  
+
   # numbers of locations and species
   SR<-apply(samp>0,1,sum)
   nlocations<-dim(samp)[1]
@@ -392,7 +392,7 @@ pse<-function(samp,tree){
     index<-seq(1,ncol(Cmatrix))[samp[i,]>0]	  # species present
     n<-length(index)                          #location species richness
     if(n>1)
-    {    
+    {
     C<-Cmatrix[index,index]		                #C for individual locations
     N<-sum(samp[i,])                          #location total abundance
     M<-samp[i,samp[i,]>0]                  #species abundance column
@@ -405,7 +405,7 @@ pse<-function(samp,tree){
   if (flag==2)
   {
     PSEout<-PSEout[-2,]
-    return(PSEout)  
+    return(PSEout)
   } else {
     return(data.frame(PSEout))
   }
@@ -413,7 +413,7 @@ pse<-function(samp,tree){
 
 
 
-psc<-function(samp,tree){
+psc<-function(samp,tree,scale.vcv=TRUE){
   # Make samp matrix a pa matrix
   samp[samp>0]<-1
   flag=0
@@ -430,7 +430,7 @@ psc<-function(samp,tree){
     # Make sure that the species line up
     samp<-samp[,tree$tip.label]
     # Make a correlation matrix of the species pool phylogeny
-    Cmatrix<-vcv.phylo(tree,corr=TRUE)
+    Cmatrix<-vcv.phylo(tree,corr=scale.vcv)
   } else {
     Cmatrix<-tree
     species<-colnames(samp)
@@ -455,10 +455,10 @@ psc<-function(samp,tree){
     index<-seq(1:nrow(Cmatrix))[samp[i,]==1]	#species present
     n<-length(index)			#number of species present
     if(n>1)
-    {    
+    {
       C<-Cmatrix[index,index]	#C for individual locations
       diag(C)<--1
-      PSC<-sum(apply(C,1,max))/n
+      PSC<- 1-(sum(apply(C,1,max))/n)
     } else {PSC<-NA}
       PSCs<-c(PSCs,PSC)
   }
@@ -466,7 +466,7 @@ psc<-function(samp,tree){
  if (flag==2)
   {
     PSCout<-PSCout[-2,]
-    return(PSCout)  
+    return(PSCout)
   } else {
     return(data.frame(PSCout))
   }
@@ -478,7 +478,7 @@ psv.spp<-function(samp,tree){
   if (is.null(dim(samp))) #if the samp matrix only has one site
   {
     samp<-rbind(samp,samp)
-  }  
+  }
   if(is(tree)[1]=="phylo")
   {
     if(is.null(tree$edge.length)){tree<-compute.brlen(tree, 1)}  #If phylo has no given branch lengths
@@ -523,71 +523,91 @@ psv.spp<-function(samp,tree){
   return(spp.PSVout)
 }
 
-psd<-function(samp,tree,compute.var=TRUE){
+psd<-function(samp,tree,compute.var=TRUE,scale.vcv=TRUE){
   if (is.null(dim(samp))) #if the samp matrix only has one site
   {
-    PSDout<-data.frame(c(psv(samp,tree,compute.var)[1],psc(samp,tree)[1],psr(samp,tree,compute.var)[1],pse(samp,tree)))
+    PSDout<-data.frame(c(psv(samp,tree,compute.var,scale.vcv)[1],psc(samp,tree,scale.vcv)[1],psr(samp,tree,compute.var,scale.vcv)[1],pse(samp,tree,scale.vcv)))
     names(PSDout)<-c("PSV","PSC","PSR","PSE","SR")
     return(PSDout)
   } else {
     if (compute.var==TRUE)
     {
-      PSDout<-cbind(psv(samp,tree,compute.var)[,c(1,3)],psc(samp,tree)[,1],psr(samp,tree,compute.var)[,c(1,3)],pse(samp,tree))
+      PSDout<-cbind(psv(samp,tree,compute.var,scale.vcv)[,c(1,3)],psc(samp,tree,scale.vcv)[,1],psr(samp,tree,compute.var,scale.vcv)[,c(1,3)],pse(samp,tree,scale.vcv))
       colnames(PSDout)<-c("PSV","var.PSV","PSC","PSR","var.PSR","PSE","SR")
     } else {
-      PSDout<-cbind(psv(samp,tree,compute.var)[,1],psc(samp,tree)[,1],psr(samp,tree,compute.var)[,1],pse(samp,tree))
+      PSDout<-cbind(psv(samp,tree,compute.var,scale.vcv)[,1],psc(samp,tree,scale.vcv)[,1],psr(samp,tree,compute.var,scale.vcv)[,1],pse(samp,tree,scale.vcv))
       colnames(PSDout)<-c("PSV","PSC","PSR","PSE","SR")
     }
     return(data.frame(PSDout))
   }
 }
 
-pd <- function (samp, tree, include.root = TRUE) 
-{
-    if (is.null(tree$edge.length)) {
-        stop("Tree has no branch lengths, cannot compute pd")
+pd <- function (samp, tree, include.root = TRUE) {
+		if (is.null(tree$edge.length)) {
+      stop("Tree has no branch lengths, cannot compute pd")
     }
+		if (include.root) {
+			# Make sure tree is rooted if needed
+			if (!is.rooted(tree)) {
+				stop("Rooted tree required to calculate PD with include.root=TRUE argument")
+				}
+    	tree <- node.age(tree)
+			}
     species <- colnames(samp)
     SR <- rowSums(ifelse(samp > 0, 1, 0))
-    nlocations = dim(samp)[1]
-    nspecies = dim(samp)[2]
-    PDs = NULL
+    nlocations <- dim(samp)[1]
+    nspecies <- dim(samp)[2]
+    PDs <- rep(NA, nlocations)
+
     for (i in 1:nlocations) {
         present <- species[samp[i, ] > 0]
-        treeabsent <- tree$tip.label[which(!(tree$tip.label %in% 
-            present))]
+        treeabsent <- tree$tip.label[which(!(tree$tip.label %in% present))]
+        # Check that sample has species; If no species are present, PD = 0
         if (length(present) == 0) {
-            PD <- 0
+            PDs[i] <- 0
         }
+        # Check if there is only ONE species in sample
         else if (length(present) == 1) {
+            # If tree is not rooted, parse error message
             if (!is.rooted(tree) || !include.root) {
-                warning("Rooted tree and include.root=TRUE argument required to calculate PD of single-species sampunities. Single species sampunity assigned PD value of NA.")
-                PD <- NA
+                warning("Rooted tree and include.root=TRUE argument required to calculate PD of single-species communities. Single species community assigned PD value of NA.")
+                PDs[i] <- NA
             }
+            # Else the PD is the node age of that single species present
             else {
-                PD <- node.age(tree)$ages[which(tree$edge[, 2] == 
+                PDs[i] <- tree$ages[which(tree$edge[, 2] ==
                   which(tree$tip.label == present))]
             }
         }
+        # If there are no absent species (all tips are in sample) then PD
+        # is the sum of all edges in the tree
         else if (length(treeabsent) == 0) {
-            PD <- sum(tree$edge.length)
+            PDs[i] <- sum(tree$edge.length)
         }
+        # Otherwise, we will need to remove absent species
         else {
+            # Make a SubTree with only present species
             sub.tree <- drop.tip(tree, treeabsent)
+            # If the tree is rooted, you need to account for different in
+            # maximum branch length between subtree and original
             if (include.root) {
+                # Make sure tree is rooted if needed
                 if (!is.rooted(tree)) {
                   stop("Rooted tree required to calculate PD with include.root=TRUE argument")
                 }
+                # Calculate diff btw max depth original and max depth subtree
                 sub.tree.depth <- max(node.age(sub.tree)$ages)
-                orig.tree.depth <- max(node.age(tree)$ages[which(tree$edge[,2] %in% which(tree$tip.label %in% present))])
-                PD <- sum(sub.tree$edge.length) + (orig.tree.depth - 
+                orig.tree.depth <- max(tree$ages[which(tree$edge[,2] %in% which(tree$tip.label %in% present))])
+                # PD is the sum of edges in subtree, plus any difference in the
+                # max distance (of only present tips) between original and sub
+                PDs[i] <- sum(sub.tree$edge.length) + (orig.tree.depth -
                   sub.tree.depth)
             }
+            # If root is not included, just add all edges
             else {
-                PD <- sum(sub.tree$edge.length)
+                PDs[i] <- sum(sub.tree$edge.length)
             }
         }
-        PDs <- c(PDs, PD)
     }
     PDout <- data.frame(PD = PDs, SR = SR)
     rownames(PDout) <- rownames(samp)
@@ -595,15 +615,15 @@ pd <- function (samp, tree, include.root = TRUE)
 }
 
 `ses.pd` <-
-function (samp, tree, null.model = c("taxa.labels", "richness", "frequency", "sample.pool", 
-    "phylogeny.pool", "independentswap", "trialswap"), runs = 999, iterations = 1000, ...) 
+function (samp, tree, null.model = c("taxa.labels", "richness", "frequency", "sample.pool",
+    "phylogeny.pool", "independentswap", "trialswap"), runs = 999, iterations = 1000, ...)
 {
     pd.obs <- as.vector(pd(samp, tree, ...)$PD)
     null.model <- match.arg(null.model)
     pd.rand <- switch(null.model,
     	taxa.labels = t(replicate(runs, as.vector(pd(samp, tipShuffle(tree), ...)$PD))),
     	richness = t(replicate(runs, as.vector(pd(randomizeMatrix(samp,null.model="richness"), tree, ...)$PD))),
-    	frequency = t(replicate(runs, as.vector(pd(randomizeMatrix(samp,null.model="frequency"), tree, ...)$PD))),    	
+    	frequency = t(replicate(runs, as.vector(pd(randomizeMatrix(samp,null.model="frequency"), tree, ...)$PD))),
     	sample.pool = t(replicate(runs, as.vector(pd(randomizeMatrix(samp,null.model="richness"), tree, ...)$PD))),
     	phylogeny.pool = t(replicate(runs, as.vector(pd(randomizeMatrix(samp,null.model="richness"),
     		tipShuffle(tree), ...)$PD))),
@@ -613,9 +633,9 @@ function (samp, tree, null.model = c("taxa.labels", "richness", "frequency", "sa
     pd.rand.mean <- apply(X = pd.rand, MARGIN = 2, FUN = mean, na.rm=TRUE)
     pd.rand.sd <- apply(X = pd.rand, MARGIN = 2, FUN = sd, na.rm=TRUE)
     pd.obs.z <- (pd.obs - pd.rand.mean)/pd.rand.sd
-    pd.obs.rank <- apply(X = rbind(pd.obs, pd.rand), MARGIN = 2, 
+    pd.obs.rank <- apply(X = rbind(pd.obs, pd.rand), MARGIN = 2,
         FUN = rank)[1, ]
-    pd.obs.rank <- ifelse(is.na(pd.rand.mean),NA,pd.obs.rank)    
-    data.frame(ntaxa=specnumber(samp),pd.obs, pd.rand.mean, pd.rand.sd, pd.obs.rank, 
+    pd.obs.rank <- ifelse(is.na(pd.rand.mean),NA,pd.obs.rank)
+    data.frame(ntaxa=specnumber(samp),pd.obs, pd.rand.mean, pd.rand.sd, pd.obs.rank,
         pd.obs.z, pd.obs.p=pd.obs.rank/(runs+1),runs=runs, row.names = row.names(samp))
 }

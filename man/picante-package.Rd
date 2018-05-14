@@ -3,17 +3,17 @@
 \alias{picante}
 \docType{package}
 \title{
-picante: R tools for integrating phylogenies and ecology
+picante: Integrating Phylogenies and Ecology
 }
 \description{
-R tools for integrating phylogenies and ecology
+Functions for phylocom integration, community analyses, null-models, traits and evolution. Implements numerous ecophylogenetic approaches including measures of community phylogenetic and trait diversity, phylogenetic signal, estimation of trait values for unobserved taxa, null models for community and phylogeny randomizations, and utility functions for data input/output and phylogeny plotting. A full description of package functionality and methods are provided by Kembel et al. (2010) <doi:10.1093/bioinformatics/btq166>.
 }
 \details{
 \tabular{ll}{
 Package: \tab picante\cr
 Type: \tab Package\cr
-Version: \tab 1.6-2\cr
-Date: \tab 2014-03-05\cr
+Version: \tab 1.7\cr
+Date: \tab 2018-05-01\cr
 License: \tab GPL-2\cr
 }
 }
