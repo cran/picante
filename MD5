@@ -1,4 +1,4 @@
-9a9966bf7ea3af7dfe57cb54af6ce512 *DESCRIPTION
+555fb4d419e46cee52a74909f92f1e55 *DESCRIPTION
 9d4ea015f41dbc1ee897b05a2e252e4b *NAMESPACE
 87718eefb56b233053684b8616fde9eb *R/color.plot.phylo.R
 f2aaf9df1eb8d614d8b778dd4f7b2f9b *R/cor.table.R
@@ -13,9 +13,9 @@ cd4dc8c660f3bf09476bec132d743ed9 *R/node.desc.R
 36e66a77c0190e36c2f258a12b9fc6cd *R/pblmpredict.R
 7a1e7322b328c34c7d8019cf4138a10c *R/pcd.R
 c7f28b57777f63baded1485ea80327b3 *R/phyEstimate.R
-06f4c9b77c8299a01972d0cd6e724ff5 *R/phylobeta.R
+f120abca0e78a8724ba0a7fd88ca5458 *R/phylobeta.R
 c7939125c11bf8ae687889e1d6e57566 *R/phylocom.R
-d166da7f9e0abeeb2f0812de6c43d84b *R/phylodiversity.R
+a1d9671edbdd92912a4e39d2f8fd832c *R/phylodiversity.R
 b747dfac28b6f018f1bcc4f065f5f51e *R/phylosignal.R
 36b1dbcfe3573724e6677872ce7f3ae3 *R/phylosor.R
 29ec226ca70a0f4a935ff6edc2d9a3e7 *R/phylostruct.R
@@ -28,14 +28,14 @@ e1f9f7cfc90022545b22f0ab26a1aefc *R/species.dist.R
 b61070f9bf5276b4fe41ac05b8beb03c *R/tax.distinctiveness.R
 36c9ae0def63e474da4f55dc7829672d *R/traitgram.R
 c65dd16fd0a008b7965d770d2c06c22b *R/utility.R
-97ae1ca207bf93b2ef4e25c2ab47ed6f *README.md
-d6a459c110566e89adec84c56a0ecba2 *build/vignette.rds
+028b965d105da2eab16dd10ace97797d *README.md
+9b4de5e331330782c48dddd9b0b0376e *build/vignette.rds
 0a65bd6c438694108b48c7b36be8a18c *data/IvesGodfray.rda
 372eff4a6a020fd2b2c48f94375f008d *data/phylocom.rda
 971b22633db8154c7da3a1b80fa511a1 *inst/CITATION
-3a767498035230c6fa56c825a0b54764 *inst/doc/picante-intro.R
-e04eec70b71e158e155430ccf2f28f54 *inst/doc/picante-intro.Rnw
-4f8acb23d422ee6a0f259b9b8e50ed89 *inst/doc/picante-intro.pdf
+1ebc144b7907a46ed74b46541fb649ad *inst/doc/picante-intro.R
+793db0e420a23e9d16cdd855bc9e8141 *inst/doc/picante-intro.Rnw
+04c042faaea5c70f59bd7ae8da247d5b *inst/doc/picante-intro.pdf
 a1fdd4ef8dd93045d948484d75914e77 *man/IvesGodfray.Rd
 37d3c25da46013ce0388ade84d58c7bf *man/Kcalc.Rd
 4d74994699382b023b4c8166d30f98f8 *man/color.plot.phylo.Rd
@@ -60,7 +60,7 @@ f11910be2e800ce4896a129424228395 *man/phylocom.Rd
 4732450491fa84e1402236bd1a1a2898 *man/phylosor.Rd
 b0dd6c8e8ffc240fb87321718b6a6d06 *man/phylosor.rnd.Rd
 5252182ef878c17fefcf8ee48953b28b *man/phylostruct.Rd
-e80ba772c594674d420a743262c922bb *man/picante-package.Rd
+e1ccaaca5c9a0f426d1fb4e0c1cc26f3 *man/picante-package.Rd
 58916ba58c9e2bffd416cfeacaf3b790 *man/pruning.Rd
 1ca57e87fb8a1d3097880744a18fe2be *man/psd.Rd
 d0538779c449a61ebccabb8c3ee5f69c *man/randomizeSample.Rd
@@ -69,7 +69,7 @@ db238f288f2a47336fa6365375512f93 *man/readsample.Rd
 77c165ab2d1aaec8c3ecf7e6a88a3345 *man/sample2matrix.Rd
 e6d1825c668a45f5f1f0307f3cd4c7fe *man/ses.mntd.Rd
 9adbf8296f840f8636fb5720ac6aea67 *man/ses.mpd.Rd
-db28e2bec37744d6d87caaa6ef3901e4 *man/ses.pd.Rd
+c3f20154ec8ac87b6528aac9b2379c76 *man/ses.pd.Rd
 11e9402ab5cdac95550351294201cf41 *man/specaccum.psr.Rd
 b55c8b53f50c869b055bccb0c49ff5b7 *man/species.dist.Rd
 d1ca0345befa62f63874849e1bf5d2ef *man/sppregs.Rd
@@ -81,4 +81,4 @@ b12eecb3f4a7934644779b0cb00369df *man/writesample.Rd
 fff266a2cbd4e347955b096ac9911550 *man/writetraits.Rd
 47cf0e5fdf7ebbc6ff13a772b7435a2a *src/picante.c
 7c22b1b500cab25872924e218f1645f5 *src/picante_init.c
-e04eec70b71e158e155430ccf2f28f54 *vignettes/picante-intro.Rnw
+793db0e420a23e9d16cdd855bc9e8141 *vignettes/picante-intro.Rnw

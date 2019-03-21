@@ -53,17 +53,18 @@ prunedphy
 
 
 ###################################################
-### code chunk number 8: picante-intro.Rnw:96-101
+### code chunk number 8: picante-intro.Rnw:96-102
 ###################################################
 par(mfrow = c(2, 3))
 for (i in row.names(comm)) {
 plot(prunedphy, show.tip.label = FALSE, main = i)
-tiplabels(tip = which(prunedphy$tip.label %in% names(which(comm [i, ] > 0))) , pch=19, cex=2)
+tiplabels(tip = which(prunedphy$tip.label %in% names(which(comm [i, ] > 0))),
+          pch=19, cex=2)
 }
 
 
 ###################################################
-### code chunk number 9: picante-intro.Rnw:106-111
+### code chunk number 9: picante-intro.Rnw:107-112
 ###################################################
 par(mfrow=c(2,2))
 for (i in names(traits)) {
@@ -73,30 +74,32 @@ for (i in names(traits)) {
 
 
 ###################################################
-### code chunk number 10: picante-intro.Rnw:122-124
+### code chunk number 10: picante-intro.Rnw:123-125
 ###################################################
 pd.result <- pd(comm, phy, include.root=TRUE)
 pd.result
 
 
 ###################################################
-### code chunk number 11: picante-intro.Rnw:143-148
+### code chunk number 11: picante-intro.Rnw:144-151
 ###################################################
 phydist <- cophenetic(phy)
-ses.mpd.result <- ses.mpd(comm, phydist, null.model="taxa.labels", abundance.weighted=FALSE, runs=99)
+ses.mpd.result <- ses.mpd(comm, phydist, null.model="taxa.labels",
+                          abundance.weighted=FALSE, runs=99)
 ses.mpd.result
-ses.mntd.result <- ses.mntd(comm, phydist, null.model="taxa.labels", abundance.weighted=FALSE, runs=99)
+ses.mntd.result <- ses.mntd(comm, phydist, null.model="taxa.labels",
+                            abundance.weighted=FALSE, runs=99)
 ses.mntd.result
 
 
 ###################################################
-### code chunk number 12: picante-intro.Rnw:174-175
+### code chunk number 12: picante-intro.Rnw:177-178
 ###################################################
 par(mfrow=c(1,1))
 
 
 ###################################################
-### code chunk number 13: picante-intro.Rnw:177-181
+### code chunk number 13: picante-intro.Rnw:180-184
 ###################################################
 comdist.result <- comdist(comm, phydist)
 comdist.result
@@ -105,7 +108,7 @@ plot(comdist.clusters)
 
 
 ###################################################
-### code chunk number 14: picante-intro.Rnw:194-196
+### code chunk number 14: picante-intro.Rnw:197-199
 ###################################################
 traits <- traits[phy$tip.label,]
 multiPhylosignal(traits,phy)
