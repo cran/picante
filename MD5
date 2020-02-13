@@ -1,8 +1,8 @@
-555fb4d419e46cee52a74909f92f1e55 *DESCRIPTION
+783d19e1833293b015630468da11d699 *DESCRIPTION
 9d4ea015f41dbc1ee897b05a2e252e4b *NAMESPACE
 87718eefb56b233053684b8616fde9eb *R/color.plot.phylo.R
 f2aaf9df1eb8d614d8b778dd4f7b2f9b *R/cor.table.R
-8ae1260c601a765dee2e464a9f4c7de8 *R/data.checking.R
+413b94ba106595c53a49992687a83945 *R/data.checking.R
 c6c30943d0dc1aef79f0cd3c96937e6a *R/evol.distinct.R
 4681bfc383b1431e1405bf51db64d4e3 *R/evolve.trait.R
 5ddd08c903557dfb903c7fca26b0c354 *R/expected.pd.R
@@ -28,14 +28,14 @@ e1f9f7cfc90022545b22f0ab26a1aefc *R/species.dist.R
 b61070f9bf5276b4fe41ac05b8beb03c *R/tax.distinctiveness.R
 36c9ae0def63e474da4f55dc7829672d *R/traitgram.R
 c65dd16fd0a008b7965d770d2c06c22b *R/utility.R
-028b965d105da2eab16dd10ace97797d *README.md
-9b4de5e331330782c48dddd9b0b0376e *build/vignette.rds
+b1d53b0bdc40d4b3d1b1b51e1676cc89 *README.md
+c46d72b8adb36e3c7c692c9a26fb6a41 *build/vignette.rds
 0a65bd6c438694108b48c7b36be8a18c *data/IvesGodfray.rda
 372eff4a6a020fd2b2c48f94375f008d *data/phylocom.rda
 971b22633db8154c7da3a1b80fa511a1 *inst/CITATION
 1ebc144b7907a46ed74b46541fb649ad *inst/doc/picante-intro.R
 793db0e420a23e9d16cdd855bc9e8141 *inst/doc/picante-intro.Rnw
-04c042faaea5c70f59bd7ae8da247d5b *inst/doc/picante-intro.pdf
+ca3ff86d38dbbc9132d778796f19c84e *inst/doc/picante-intro.pdf
 a1fdd4ef8dd93045d948484d75914e77 *man/IvesGodfray.Rd
 37d3c25da46013ce0388ade84d58c7bf *man/Kcalc.Rd
 4d74994699382b023b4c8166d30f98f8 *man/color.plot.phylo.Rd
@@ -60,7 +60,7 @@ f11910be2e800ce4896a129424228395 *man/phylocom.Rd
 4732450491fa84e1402236bd1a1a2898 *man/phylosor.Rd
 b0dd6c8e8ffc240fb87321718b6a6d06 *man/phylosor.rnd.Rd
 5252182ef878c17fefcf8ee48953b28b *man/phylostruct.Rd
-e1ccaaca5c9a0f426d1fb4e0c1cc26f3 *man/picante-package.Rd
+2c89a67f72e7c571898cd9a4b07001c1 *man/picante-package.Rd
 58916ba58c9e2bffd416cfeacaf3b790 *man/pruning.Rd
 1ca57e87fb8a1d3097880744a18fe2be *man/psd.Rd
 d0538779c449a61ebccabb8c3ee5f69c *man/randomizeSample.Rd
@@ -76,7 +76,7 @@ d1ca0345befa62f63874849e1bf5d2ef *man/sppregs.Rd
 de40a15267e10d8f3357965a4b62ab07 *man/tax.distinctiveness.Rd
 24cc08ac45c5f5c5d69dab6b046e6b35 *man/traitgram.Rd
 da3cef64bcb4955779ff528dc9d8e8bf *man/unifrac.Rd
-1df799704ff28b865829aa14bfce9abe *man/utility.Rd
+a8368484fac09f48402b38ffe6f66253 *man/utility.Rd
 b12eecb3f4a7934644779b0cb00369df *man/writesample.Rd
 fff266a2cbd4e347955b096ac9911550 *man/writetraits.Rd
 47cf0e5fdf7ebbc6ff13a772b7435a2a *src/picante.c
